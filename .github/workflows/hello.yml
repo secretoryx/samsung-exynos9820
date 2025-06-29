@@ -1,0 +1,14 @@
+name: Hello GitHub Actions
+
+on: [push]
+
+jobs:
+  hello:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "✅ GitHub Actions is working!"
+      - name: Test upload-artifact v3
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: .github/    # any existing path
