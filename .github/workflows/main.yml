@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        model: [ "G970F,G973F,G975F", "N975F" ]
+        model: [ "G970F,G973F,G975F", "N975F", "N971N" ]
 
     steps:
       - uses: actions/checkout@v3
@@ -54,18 +54,23 @@ jobs:
         run: |
           set -e -o pipefail
           ./cruelbuild config                    \
-                       model=N971N \
-  +magisk=stable \
-  +hid_gadget \
-  +usb_configfs \
-  +mass_storage \
-  +ath9k_htc \
-  +rtl88xxau \
-  +1000hz \
-  +wireguard \
-  +overclock \
-  +schedutil \
-  +nethunter
+                           model=${{ matrix.model }}        \
+                           name="NetHunterKernel"           \
+                           toolchain=$TOOLCHAIN             \
+                           +magisk                          \
+                           +hid_gadget                      \
+                           +usb_configfs                    \
+                           +mass_storage                    \
+                           +ath9k_htc                       \
+                           +rtl88xxau                       \
+                           +wireguard                       \
+                           +overclock                       \
+                           +schedutil                       \
+                           +1000hz                          \
+                           +cifs                            \
+                           +nethunter                       \
+                           +morosound                       \
+                           +boeffla_wl_blocker              \
           2>&1 | tee config.info
 
       - name: Install gcc-aarch64-linux-gnu
